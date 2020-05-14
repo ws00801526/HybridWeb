@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'HybridWeb_Example' do
+  pod 'HybridWeb', :path => '../'
+
+  target 'HybridWeb_Tests' do
+    inherit! :search_paths
+
+    pod 'Kiwi'
+  end
+end
