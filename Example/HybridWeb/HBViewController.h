@@ -8,6 +8,14 @@
 
 @import UIKit;
 
+@interface HBNavigationController : UINavigationController
+
+@end
+
+@interface HBTabBarController : UITabBarController
+
+@end
+
 @interface HBViewController : UIViewController
 
 @end

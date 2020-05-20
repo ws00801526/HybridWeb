@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta charset="utf-8">
+  <title>微信JS-SDK Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="./demo.css">
+  <script ref="preload" src="./demo.js"> </script>
+  <script>
+      window.document.addEventListener('HBJSBridgeReady', function() {
+          console.log('Bridge is ready');
+      })
+      console.log('log before script init')
+  </script>
+</head>
+<body ontouchstart="">
+<div class="wxapi_container">
+    <div class="wxapi_index_container">
+      <ul class="label_box lbox_close wxapi_index_list">
+        <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-basic">基础接口</a></li>
+        <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-life">LifeEvent监听</a></li>
+      <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-route">Route操作监听</a></li>
+      </ul>
+    </div>
+    <div class="lbox_close wxapi_form">
+      <h3 id="menu-basic">基础接口</h3>
+      <span class="desc">判断当前客户端是否支持指定JS接口</span>
+      <button class="btn btn_primary" id="checkJsApi" onclick="checkApi()">checkJsApi</button>
+      
+      <h3 id="menu-life">LifeEvent监听</h3>
+      <span class="desc">提供当前App\Page生命周期监听</span>
+      <button class="btn btn_primary" id="lifeCycle" onclick="lifeCycle()">注册监听事件</button>
+
+      <h3 id="menu-route">基础操作</h3>
+      <span class="desc">提供push\pop\config 打开\关闭\配置 Webview标签页</span>
+      <button class="btn btn_primary" id="push" onclick="push()">Push</button>
+      <button class="btn btn_primary" id="pop" onclick="pop()">Pop</button>
+      <button class="btn btn_primary" id="pasteboard" onclick="pasteboard()">Pasateboard</button>
+      <button class="btn btn_primary" id="webConfig" onclick="config()">Config</button>
+      <button class="btn btn_primary" id="webConfig-autoRead" onclick="autoRead()">关闭\开启 自动读取标题</button>
+      <button class="btn btn_primary" id="webConfig-updateTitle" onclick="updateTitle()">动态改变当前标题</button>
+      <textarea class="area area_primary" id="configArea">{}</textarea>
+    </div>
+  </div>
+</body>
+</html>
