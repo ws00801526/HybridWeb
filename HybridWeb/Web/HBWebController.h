@@ -81,11 +81,4 @@ typedef NS_ENUM(NSInteger, HBWebViewDecidePolicy) {
 + (void)registerGlobalInterceptor:(Class<HBInterceptor>)interceptor;
 @end
 
-#if DEBUG
-@interface HBWebController (Debug)
-+ (void)startDebugOf:(__kindof UIViewController *)parent;
-+ (void)startDebugOf:(__kindof UIViewController *)parent userInfo:(nullable NSDictionary *)userInfo;
-@end
-#endif
-
 NS_ASSUME_NONNULL_END

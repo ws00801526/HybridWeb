@@ -19,7 +19,8 @@
       <ul class="label_box lbox_close wxapi_index_list">
         <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-basic">基础接口</a></li>
         <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-life">LifeEvent监听</a></li>
-      <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-route">Route操作监听</a></li>
+        <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-route">基础Bridge操作</a></li>
+        <li class="label_item wxapi_index_item"><a class="label_inner" href="#menu-http">网络请求</a></li>
       </ul>
     </div>
     <div class="lbox_close wxapi_form">
@@ -40,6 +41,14 @@
       <button class="btn btn_primary" id="webConfig-autoRead" onclick="autoRead()">关闭\开启 自动读取标题</button>
       <button class="btn btn_primary" id="webConfig-updateTitle" onclick="updateTitle()">动态改变当前标题</button>
       <textarea class="area area_primary" id="configArea">{}</textarea>
+      
+      
+      <h3 id="menu-http">网络操作</h3>
+      <span class="desc">提供原生网络请求, 用于解决跨域等问题</span>
+      <button class="btn btn_primary" id="get" onclick="http_get()">GET</button>
+      <button class="btn btn_primary" id="post" onclick="http_post()">POST</button>
+      <input  id="upload_file" type="file" mutiple/>
+      <button class="btn btn_primary" id="upload" onclick="http_upload()">Upload</button>
     </div>
   </div>
 </body>
