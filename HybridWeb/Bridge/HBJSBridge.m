@@ -6,6 +6,7 @@
 //
 
 #import "HBJSBridge.h"
+#import "HBWeakProxy.h"
 #import "HBJSBridgeHandler.h"
 #import "HBJSBridge_JS.h"
 #import "WKWebView+HBExtension.h"
@@ -22,9 +23,6 @@ static NSString *const kEWJSQueueHasMessage = @"__ewjb_queue_message__";
 static NSString *const kHBJSBridgeHasLoaded = @"__bridge_loaded__";
 
 static NSString *const kEWJSHandlerDispatchEvent = @"_dispatchEventFromObjC";
-static NSString *const kEWJSHandlerDisableAsync = @"_disableAsync";
-
-
 
 @interface HBJSBridge () <WKScriptMessageHandler>
 
@@ -82,8 +80,8 @@ static NSString *const kEWJSHandlerDisableAsync = @"_disableAsync";
             [self.webView.configuration.userContentController addUserScript:script];
         }
         
-        [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"flushQueue"];
-        [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"injectBridge"];
+        [self.webView.configuration.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)[HBWeakProxy proxyWithTarget:self] name:@"flushQueue"];
+        [self.webView.configuration.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)[HBWeakProxy proxyWithTarget:self] name:@"injectBridge"];
     }
     return self;
 }
@@ -481,10 +479,6 @@ static NSString *const kEWJSHandlerDisableAsync = @"_disableAsync";
 @end
 
 @implementation HBJSBridge (N2JS)
-
-- (void)disableAsync {
-    [self _send:nil callBack:NULL handlerName:kEWJSHandlerDisableAsync];
-}
 
 - (void)dispatchEvent:(NSString *)eventName options:(nullable NSDictionary *)options {
     

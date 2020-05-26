@@ -21,9 +21,8 @@ NSString *__nonnull HBJSBridge_JS(void) {
         }
         
         window.HBJSBridge = {
-            register: registerHandler,
+        register: registerHandler,
         call: callHandler,
-        disableAsync: disableAsync,
         _fetchQueue: _fetchQueue,
         _handleMessageFromObjC: _dispatchMessageFromObjC,
         _handleEventFromObjC: _dispatchEventFromObjC
@@ -50,22 +49,21 @@ NSString *__nonnull HBJSBridge_JS(void) {
                 responseCallback = data;
                 data = null;
             }
-            _doSend({ handlerName: handlerName, data: data }, responseCallback);
+            return _doSend({ handlerName: handlerName, data: data }, responseCallback);
         }
-        
-        function disableAsync() {
-            dispatchWithTimeoutSafety = false;
-        }
-        
+                
         function _doSend(message, responseCallback) {
+            
+            var callbackId = null;
             if (responseCallback) {
                 // save callback in JS side, will be used while Native callback
-                var callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
+                callbackId = 'cb_' + (uniqueId++) + '_' + new Date().getTime();
                 responseCallbacks[callbackId] = responseCallback;
                 message['callbackId'] = callbackId;
             }
             // using webkit.messageHandlers, some url using CSP will block the iframe.
             message && window.webkit.messageHandlers.flushQueue.postMessage([message]);
+            return callbackId;
             // save message into queue, waiting for Native flush it
             // sendMessageQueue.push(message);
             // messagingFrame.src = CUSTOM_PROTOCOL_SCHEME + ':' + QUEUE_HAS_MESSAGE;
@@ -138,7 +136,7 @@ NSString *__nonnull HBJSBridge_JS(void) {
                 }
             }
         }
-        
+
         registerHandler("_disableAsync", disableAsync);
         registerHandler("_dispatchEventFromObjC", _dispatchEventFromObjC);
         
