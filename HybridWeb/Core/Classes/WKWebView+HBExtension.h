@@ -47,7 +47,6 @@ typedef NS_ENUM(NSUInteger, HBWebCacheType) {
 /// @param handler  A block to invoke once the cookie has been deleted.
 - (void)deleteCookie:(NSHTTPCookie *)cookie handler:(nullable void(^)(void))handler;
 
-
 /// Clear specified caches
 /// @param types  the cache type will be cleared
 /// @param date    the cache modified after the date, Default will be [NSDate distancePash]

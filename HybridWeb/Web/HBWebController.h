@@ -19,7 +19,11 @@ typedef NS_ENUM(NSUInteger, HBInterceptorPriority) {
     HBInterceptorPriorityDefault = HBInterceptorPriorityNormal
 };
 
-static WKNavigationActionPolicy WKNavigationActionPolicyIgnored = NSNotFound;
+typedef NS_ENUM(NSInteger, HBWebViewDecidePolicy) {
+    HBWebViewDecidePolicyCancelled = 0,
+    HBWebViewDecidePolicyAllow,
+    HBWebViewDecidePolicyIgnored = NSNotFound,
+};
 
 @class HBWebController;
 @protocol HBInterceptor <UIScrollViewDelegate>
@@ -41,7 +45,8 @@ static WKNavigationActionPolicy WKNavigationActionPolicyIgnored = NSNotFound;
 /// @warning make sure return YES if you using the decisionHandler.
 /// @param controller the controller of Web
 /// @param navigationAction the navigation
-- (WKNavigationActionPolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction;
+- (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction;
+- (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse;
 
 - (void)webController:(HBWebController *)controller willTransitionToSize:(CGSize)size withContext:(id<UIViewControllerTransitionCoordinatorContext>)context;
 - (void)webController:(HBWebController *)controller didTransitionToSize:(CGSize)size withContext:(id<UIViewControllerTransitionCoordinatorContext>)context;

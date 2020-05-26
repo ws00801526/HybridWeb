@@ -22,7 +22,6 @@
     #import "HBInterceptor_Bridge.h"
 #endif
 
-
 static HBWebViewReusePool *kEWReusePool;
 @interface HBWebController ()
 
@@ -380,28 +379,41 @@ static HBWebViewReusePool *kEWReusePool;
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction preferences:(WKWebpagePreferences *)preferences decisionHandler:(void (^)(WKNavigationActionPolicy, WKWebpagePreferences *))decisionHandler  API_AVAILABLE(ios(13.0)){
     
-    WKNavigationActionPolicy policy = WKNavigationActionPolicyIgnored;
+    HBWebViewDecidePolicy policy = HBWebViewDecidePolicyIgnored;
     for (id<HBInterceptor> interceptor in self.interceptors) {
         if (interceptor.webController != self) continue;
         if (![interceptor respondsToSelector:@selector(webController:decidePolicyForNavigationAction:)]) continue;
         policy = [interceptor webController:self decidePolicyForNavigationAction:navigationAction];
-        if (policy != WKNavigationActionPolicyIgnored) break;
+        if (policy != HBWebViewDecidePolicyIgnored) break;
     }
-    if (policy == WKNavigationActionPolicyIgnored) policy = WKNavigationActionPolicyAllow;
-    decisionHandler(policy, [[WKWebpagePreferences alloc] init]);
+    if (policy == HBWebViewDecidePolicyIgnored) policy = HBWebViewDecidePolicyAllow;
+    decisionHandler((WKNavigationActionPolicy)policy, [[WKWebpagePreferences alloc] init]);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
-    WKNavigationActionPolicy policy = WKNavigationActionPolicyIgnored;
+    HBWebViewDecidePolicy policy = HBWebViewDecidePolicyIgnored;
     for (id<HBInterceptor> interceptor in self.interceptors) {
         if (interceptor.webController != self) continue;
         if (![interceptor respondsToSelector:@selector(webController:decidePolicyForNavigationAction:)]) continue;
         policy = [interceptor webController:self decidePolicyForNavigationAction:navigationAction];
-        if (policy != WKNavigationActionPolicyIgnored) break;
+        if (policy != HBWebViewDecidePolicyIgnored) break;
     }
-    if (policy == WKNavigationActionPolicyIgnored) policy = WKNavigationActionPolicyAllow;
-    decisionHandler(policy);
+    if (policy == HBWebViewDecidePolicyIgnored) policy = HBWebViewDecidePolicyAllow;
+    decisionHandler((WKNavigationActionPolicy)policy);
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    
+    HBWebViewDecidePolicy policy = HBWebViewDecidePolicyIgnored;
+    for (id<HBInterceptor> interceptor in self.interceptors) {
+        if (interceptor.webController != self) continue;
+        if (![interceptor respondsToSelector:@selector(webController:decidePolicyForNavigationResponse:)]) continue;
+        policy = [interceptor webController:self decidePolicyForNavigationResponse:navigationResponse];
+        if (policy != HBWebViewDecidePolicyIgnored) break;
+    }
+    if (policy == HBWebViewDecidePolicyIgnored) policy = HBWebViewDecidePolicyAllow;
+    decisionHandler((WKNavigationResponsePolicy)policy);
 }
 
 #pragma mark - WKUIDelegate
@@ -445,8 +457,6 @@ static HBWebViewReusePool *kEWReusePool;
     }]];
     [self showDetailViewController:alertController sender:self];
 }
-
-
 
 #pragma mark - Getter
 

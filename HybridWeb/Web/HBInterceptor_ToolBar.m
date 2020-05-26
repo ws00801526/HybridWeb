@@ -143,12 +143,12 @@ static CGFloat const kEWToolBarHeight = 50.f;
     [self setupTooBarUI];
 }
 
-- (WKNavigationActionPolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction {
+- (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction {
     NSURL *targetURL = navigationAction.request.URL;
-    if (!targetURL.hb_isNotEmpty) return WKNavigationActionPolicyIgnored;
+    if (!targetURL.hb_isNotEmpty) return HBWebViewDecidePolicyIgnored;
     if (self.shouldToolBarVisible) [self updateToolBarVisible:YES animated:YES];
     else if (![targetURL isEqual:self.webController.startURL]) [self updateToolBarVisible:YES animated:YES];
-    return WKNavigationActionPolicyIgnored;
+    return HBWebViewDecidePolicyIgnored;
 }
 
 - (void)webController:(HBWebController *)controller willTransitionToSize:(CGSize)size withContext:(id<UIViewControllerTransitionCoordinatorContext>)context {
