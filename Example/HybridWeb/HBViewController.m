@@ -10,6 +10,7 @@
 #import "HBJSBridgeHandler_Custom.h"
 #import <objc/runtime.h>
 #import <HybridWeb/HybridWeb.h>
+#import <HybridWeb/HBWebController+Debug.h>
 
 typedef NS_ENUM(NSUInteger, HBTableViewCellMode) {
     HBTableViewCellModeUnknown,
