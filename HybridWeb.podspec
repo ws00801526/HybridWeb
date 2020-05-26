@@ -41,16 +41,20 @@ Pod::Spec.new do |s|
     ss.dependency 'HybridWeb/Core'
     ss.dependency 'HybridWeb/Bridge'
     # !!!: if using resources twice, may be the assets will be copyed many times, so we used resource_bundles
-    ss.resource_bundles = {
-      'Web' => ['HybridWeb/Web/*.xcassets', 'HybridWeb/Web/*.{html,js,css}']
-    }
+    ss.resource_bundles = { 'Web' => ['HybridWeb/Web/*.xcassets'] }
 
     ss.subspec 'Core' do |sss|
       sss.source_files = 'HybridWeb/Web/Core/*.{h,m}'
     end
     
     ss.subspec 'Http' do |sss|
-      
+      sss.resource_bundles = { 'WebHttp' => ['HybridWeb/Web/nfetch.js'] }
+      sss.source_files = 'HybridWeb/Web/Http/*.{h,m}'
+    end
+    
+    ss.subspec 'Debug' do |sss|
+      sss.source_files = 'HybridWeb/Web/Debug/*.{h,m}'
+      sss.resource_bundles = { 'WebDebug' => ['HybridWeb/Web/Debug/*.{html,js,css}'] }
     end
   end
 end
