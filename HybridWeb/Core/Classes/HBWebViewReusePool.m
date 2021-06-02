@@ -136,15 +136,11 @@
     configuration.preferences.minimumFontSize = 9.f;
     // allow user play video inline
     configuration.allowsInlineMediaPlayback = YES;
-    if (@available(iOS 9.0, *)) {
-        configuration.allowsAirPlayForMediaPlayback = NO;
-        configuration.allowsPictureInPictureMediaPlayback = YES;
-    } else {
-        // disable airPlay
-        configuration.mediaPlaybackAllowsAirPlay = NO;
-    }
-    if (@available(iOS 10.0, *)) { configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone; }
-    else { configuration.mediaPlaybackRequiresUserAction = NO; }
+    
+    // Only supports above iOS 10.0
+    configuration.allowsAirPlayForMediaPlayback = NO;
+    configuration.allowsPictureInPictureMediaPlayback = YES;
+    configuration.mediaTypesRequiringUserActionForPlayback = WKAudiovisualMediaTypeNone;
     return configuration;
 }
 
