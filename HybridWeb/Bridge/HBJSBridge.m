@@ -480,6 +480,11 @@ static NSString *const kEWJSHandlerDispatchEvent = @"_dispatchEventFromObjC";
 
 @implementation HBJSBridge (N2JS)
 
+- (void)disableAsync {
+    HBJBMessage *message = @{ @"eventName" : @"_disableAsync", @"options" : @{ @"enabled" : @(false) } };
+    [self _send:message callBack:NULL handlerName:kEWJSHandlerDispatchEvent];
+}
+
 - (void)dispatchEvent:(NSString *)eventName options:(nullable NSDictionary *)options {
     
     if (eventName.length <= 0) return;

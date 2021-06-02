@@ -16,6 +16,8 @@
 }
 
 - (NSMutableURLRequest *)webController:(HBWebController *)controller willLoadURLRequest:(NSURLRequest *)URLRequest {
+
+    // 1. add cookie for the first load
     NSMutableURLRequest *request = [URLRequest mutableCopy];
     NSArray<NSHTTPCookie *> *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:request.URL];
     if (cookies.count) {
@@ -28,6 +30,7 @@
 
 - (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction {
  
+    // 2. add cookie for each request, including redirect url.
     // The request is redirected. maybe invoked by server\<target="_blank">
     if ([navigationAction.request isKindOfClass:[NSMutableURLRequest class]]) {
         NSMutableURLRequest *request = (NSMutableURLRequest *)navigationAction.request;
@@ -42,6 +45,7 @@
 }
 
 - (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse {
+    // 3. 
     if (@available(iOS 11, *)) {
         [controller.webView.configuration.websiteDataStore.httpCookieStore getAllCookies:^(NSArray<NSHTTPCookie *> *cookies) {
             for (NSHTTPCookie *cookie in cookies) { [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie]; }

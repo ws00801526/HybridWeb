@@ -136,8 +136,13 @@ NSString *__nonnull HBJSBridge_JS(void) {
                 }
             }
         }
+        
+        func _disableAsync(event) {
+            var enabled = event && event.options.enabled
+            dispatchWithTimeoutSafety = enabled || false
+        }
 
-        registerHandler("_disableAsync", disableAsync);
+        registerHandler("_disableAsync", _disableAsync);
         registerHandler("_dispatchEventFromObjC", _dispatchEventFromObjC);
         
         // dispatch ready event

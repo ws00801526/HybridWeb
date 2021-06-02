@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, HBWebViewDecidePolicy) {
 - (NSMutableURLRequest *)webController:(HBWebController *)controller willLoadURLRequest:(NSURLRequest *)URLRequest;
 
 /// Intercept the decide policy for navigation.
-/// @warning make sure return YES if you using the decisionHandler.
+/// @warning make sure return value if you using the decisionHandler.
 /// @param controller the controller of Web
 /// @param navigationAction the navigation
 - (HBWebViewDecidePolicy)webController:(HBWebController *)controller decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction;
